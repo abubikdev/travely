@@ -1,0 +1,49 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Travel Pal",
+  "version": "0.1.0",
+  "identifier": "com.travelpal.app",
+  "build": {
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build:tauri"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Travel Pal",
+        "width": 430,
+        "height": 900,
+        "minWidth": 375,
+        "minHeight": 640,
+        "resizable": true,
+        "center": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' tauri: asset: https://asset.localhost http://asset.localhost; connect-src 'self' https://api.openai.com https://cdnjs.cloudflare.com tauri: asset: https://asset.localhost http://asset.localhost; img-src 'self' data: blob: asset: https://asset.localhost http://asset.localhost; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Travel",
+    "shortDescription": "Travel execution assistant",
+    "longDescription": "Intelligent travel execution assistant for flights, transfers, airports, and logistics.",
+    "macOS": {
+      "minimumSystemVersion": "11.0",
+      "signingIdentity": "-"
+    }
+  }
+}

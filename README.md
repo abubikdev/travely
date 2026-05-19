@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Travel Pal
 
-## Getting Started
+A premium AI-native travel **execution** assistant — focused on flights, airports, transfers, timing, and logistics (not tourism).
 
-First, run the development server:
+## Features
+
+- **Single OpenAI API key** — stored encrypted locally; powers chat, vision, OCR, and guide generation
+- **Document upload** — PDFs and images with OCR; passport photo detection blocked
+- **AI interview** — concise logistics-focused Q&A
+- **Approval summary** — review segments, risks, and gaps
+- **Dynamic travel guide** — JSON schema rendered as interactive timeline UI
+- **AI-editable guide** — natural language edits to structured guide data
+- **PWA** — installable, offline shell caching, service worker
+
+## Stack
+
+- Next.js (App Router), TypeScript, Tailwind CSS v4
+- Framer Motion, Zustand, Zod
+- pdf.js, tesseract.js, OpenAI SDK
+- IndexedDB via `idb`
+
+## Getting started
+
+### Supabase (optional auth)
+
+Auth is **off** unless both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set. The Vercel deployment runs without them.
+
+To enable locally: create a Supabase project, add env vars, enable Email auth, and run `supabase/migrations/20260319000000_profiles.sql`.
+
+### Web (PWA)
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Complete onboarding (account, privacy, [OpenAI API key](https://platform.openai.com/api-keys)).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Deploy with `npm run build` and host on Vercel, or any Node/static host.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### macOS desktop (Tauri)
 
-## Learn More
+**Prerequisites:** [Rust](https://rustup.rs/) and Xcode Command Line Tools (`xcode-select --install`).
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run tauri:dev      # dev: Next.js + native window
+npm run tauri:build:mac # release .app + .dmg in src-tauri/target/release/bundle/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Tauri uses a static export (`npm run build:tauri` → `out/`). The standard `npm run build` remains for web deployment without affecting the desktop bundle.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Privacy
 
-## Deploy on Vercel
+- Accounts via Supabase Auth (email/password or magic link)
+- API keys are AES-encrypted in local storage (device-derived salt)
+- Documents and journeys persist in IndexedDB on your device
+- No key logging or analytics
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Next.js dev server (web) |
+| `npm run build` | Production build for web |
+| `npm run build:tauri` | Static export to `out/` for Tauri |
+| `npm run tauri:dev` | macOS app + hot reload |
+| `npm run tauri:build:mac` | macOS `.app` and `.dmg` |
+
+## Project structure
+
+```
+src-tauri/       # Tauri (Rust) native shell
+src/
+  app/           # Routes
+  ai/            # OpenAI client, prompts, passport detection
+  components/    # UI, chat, timeline, gradients
+  features/      # Onboarding, journey steps
+  stores/        # Zustand + persistence
+  schemas/       # Guide JSON schema (Zod)
+  lib/           # DB, crypto, PWA, web intelligence stubs
+```
+
+## License
+
+Private — MVP build.
