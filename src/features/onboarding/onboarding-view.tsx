@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GradientMesh } from "@/components/gradients/gradient-mesh";
-import { GradientOrb } from "@/components/gradients/gradient-orb";
+// Removed gradient-heavy visuals for onboarding: no gradients here.
 import { OnboardingProgress } from "@/components/onboarding/onboarding-progress";
 import { AuthStep } from "@/features/onboarding/auth-step";
 import { Button } from "@/components/ui/button";
@@ -46,19 +45,14 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
   const { setApiKey: saveKey, setOnboardingComplete } = useSettingsStore();
 
   useEffect(() => {
-    if (
-      authEnabled &&
-      !authLoading &&
-      isAuthenticated &&
-      step === "welcome"
-    ) {
+    if (authEnabled && !authLoading && isAuthenticated && step === "welcome") {
       setStep("privacy");
     }
   }, [authEnabled, authLoading, isAuthenticated, step]);
 
   const stepIndex = useMemo(
     () => (steps as readonly Step[]).indexOf(step),
-    [steps, step]
+    [steps, step],
   );
 
   const goNext = (next: Step) => setStep(next);
@@ -107,12 +101,10 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
 
   return (
     <motion.div
-      className="relative flex min-h-[100dvh] w-full flex-col"
+      className="relative flex min-h-[100dvh] w-full flex-col no-gradients"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <GradientMesh />
-
       <div className="relative z-10 flex min-h-[100dvh] w-full flex-col px-5 pb-[max(24px,var(--safe-bottom))] pt-[max(20px,var(--safe-top))]">
         {step !== "welcome" && (
           <div className="mb-8">
@@ -131,19 +123,24 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
               className="flex flex-1 flex-col"
             >
               <div className="flex flex-1 flex-col items-center justify-center text-center">
-                <GradientOrb size={180} className="mb-10" />
+                <div
+                  className="h-40 w-40 rounded-full bg-[var(--surface-muted)] mb-10 mx-auto"
+                  aria-label="onboarding visual"
+                />
                 <motion.div
                   className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-medium"
-                  style={{ background: "var(--gradient-soft)" }}
+                  style={{ background: "var(--surface-muted)" }}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <Sparkles className="h-4 w-4 text-[var(--accent-pink)]" />
-                  <span className="gradient-text">Travel execution AI</span>
+                  <Sparkles className="h-4 w-4 text-[var(--foreground-secondary)]" />
+                  <span className="text-[var(--foreground)]">
+                    Travel execution AI
+                  </span>
                 </motion.div>
                 <h1 className="text-[44px] font-semibold leading-[1.02] tracking-[-0.04em]">
-                  <span className="gradient-text">{APP_NAME}</span>
+                  {APP_NAME}
                 </h1>
                 <p className="mt-5 max-w-md text-[19px] leading-relaxed text-[var(--foreground-secondary)]">
                   Navigate flights, transfers, airports, and timing — not
@@ -153,7 +150,7 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
               <Button
                 fullWidth
                 size="lg"
-                variant="gradient"
+                variant="default"
                 onClick={() => goNext(nextFromWelcome())}
               >
                 Get started
@@ -178,8 +175,7 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
                   <Shield className="h-6 w-6 text-white" strokeWidth={1.5} />
                 </div>
                 <h2 className="text-[34px] font-semibold tracking-[-0.03em]">
-                  Your data{" "}
-                  <span className="gradient-text">stays yours</span>
+                  Your data <span className="gradient-text">stays yours</span>
                 </h2>
                 <ul className="mt-8 space-y-5 text-[17px] leading-relaxed text-[var(--foreground-secondary)]">
                   {authEnabled && (

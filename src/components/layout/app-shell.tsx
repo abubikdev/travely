@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { GradientMesh } from "@/components/gradients/gradient-mesh";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -27,7 +26,6 @@ export function AppShell({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <GradientMesh />
       {accentHeader && (
         <motion.div
           className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[min(42vh,360px)]"
@@ -41,17 +39,12 @@ export function AppShell({
         </header>
       )}
       <main
-        className={cn(
-          "relative z-10 flex w-full flex-1 flex-col",
-          className
-        )}
+        className={cn("relative z-10 flex w-full flex-1 flex-col", className)}
       >
         {children}
       </main>
       {footer && (
-        <footer className="relative z-10 w-full shrink-0">
-          {footer}
-        </footer>
+        <footer className="relative z-10 w-full shrink-0">{footer}</footer>
       )}
     </motion.div>
   );
@@ -89,7 +82,7 @@ export function StepHeader({
           "font-semibold tracking-[-0.03em] text-[var(--foreground)]",
           size === "large"
             ? "text-[34px] leading-[1.1]"
-            : "text-[28px] leading-[1.15]"
+            : "text-[28px] leading-[1.15]",
         )}
       >
         {title}

@@ -62,6 +62,63 @@
         system-ui, sans-serif;
 }
 
+/* Monochrome palette with no background gradients by default */
+html.theme-monochrome {
+    /* Keep grayscale defaults, remove gradient dependence */
+    --background: #f6f6f6;
+    --background-elevated: #ffffff;
+    --foreground: #1a1a1d;
+    --foreground-secondary: #6d6d72;
+    --foreground-tertiary: #8a8a90;
+    --surface-muted: #e5e5e9;
+}
+
+/* Avoid gradient backgrounds in general */
+.gradient-fill {
+    background: var(--surface-muted);
+    background-image: none;
+}
+.gradient-text {
+    color: var(--foreground);
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+}
+
+/* Backgrounds: remove mesh gradient from body */
+body {
+    background-color: var(--background);
+    background-image: none;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    min-height: 100%;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background: rgba(255, 93, 162, 0.22);
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.gradient-text {
+    /* keep non-gradient text for better readability on monochrome */
+    color: var(--foreground);
+    background: none;
+}
+
 /* Monochrome theme (default) */
 html.theme-monochrome {
     --background: #f6f6f6;
@@ -91,16 +148,7 @@ html.theme-monochrome {
         radial-gradient(circle, rgba(200, 200, 200, 0.2) 0%, transparent 60%);
 }
 
-/* Occasional color burst (when gradient-occasion is active) */
-html.theme-monochrome.gradient-occasion .gradient-fill {
-    background: linear-gradient(135deg, #ff5da2 0%, #5b8cff 48%, #ffb347 100%);
-}
-html.theme-monochrome.gradient-occasion .gradient-text {
-    background: linear-gradient(135deg, #ff5da2 0%, #5b8cff 48%, #ffb347 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
+/* Gradients removed in onboarding and backgrounds; bursts disabled for now */
 
 * {
     -webkit-tap-highlight-color: transparent;
@@ -113,7 +161,7 @@ html {
 
 body {
     background-color: var(--background);
-    background-image: var(--gradient-mesh);
+    background-image: none;
     background-attachment: fixed;
     background-size: cover;
     color: var(--foreground);
@@ -139,14 +187,15 @@ body {
 }
 
 .gradient-text {
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--foreground);
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
 }
 
 .gradient-fill {
-    background: var(--gradient-brand);
+    background: var(--surface-muted);
+    background-image: none;
 }
 
 .surface-elevated {
@@ -223,4 +272,39 @@ body {
     .animate-gradient-flow {
         animation: none !important;
     }
+}
+
+/* Safety overrides: ensure no gradients leak into the UI (global monochrome enforcement) */
+* {
+    background: none !important;
+    background-image: none !important;
+    color: #1a1a1d !important;
+}
+html,
+body {
+    background: #ffffff !important;
+    background-image: none !important;
+}
+html.theme-monochrome {
+    background: #ffffff !important;
+    background-image: none !important;
+}
+
+/* Safety net: disable all background gradients and enforce monochrome surfaces across the app */
+*,
+*::before,
+*::after {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #1a1a1d !important;
+}
+html,
+body {
+    background: #ffffff !important;
+    background-image: none !important;
+}
+/* In explicit monochrome theme, preserve a subtle non-gradient surface if desired */
+html.theme-monochrome {
+    background: #ffffff !important;
+    background-image: none !important;
 }

@@ -10,13 +10,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-[var(--foreground)] text-[var(--background-elevated)]",
-        secondary:
-          "bg-[var(--surface-muted)] text-[var(--foreground)]",
-        ghost:
-          "text-[var(--foreground-secondary)]",
-        gradient: "text-white gradient-fill",
+        default: "bg-black text-white",
+        secondary: "bg-[var(--surface-muted)] text-[var(--foreground)]",
+        ghost: "text-[var(--foreground-secondary)]",
+        gradient: "bg-black text-white",
       },
       size: {
         default: "h-[52px] px-8",
@@ -32,11 +29,12 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
@@ -51,6 +49,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       />
     );
-  }
+  },
 );
 Button.displayName = "Button";
