@@ -20,8 +20,8 @@ export function ApprovalStep({ onApproved }: { onApproved: () => void }) {
 
   const summary = currentJourney?.summary;
 
-  const handleApprove = async () => {
-    await generateGuide();
+  const handleApprove = () => {
+    generateGuide();
     onApproved();
   };
 

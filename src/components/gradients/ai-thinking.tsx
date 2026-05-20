@@ -11,8 +11,9 @@ export function AiThinking({ className }: { className?: string }) {
       aria-label="Generating"
     >
       <motion.div
-        className="h-2 w-16 rounded-full animate-gradient-flow opacity-80"
-        style={{ background: "var(--gradient-brand)" }}
+        className="h-1.5 w-16 rounded-full bg-[var(--surface-muted)]"
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         layout
       />
     </div>
@@ -27,9 +28,8 @@ export function AiProgressBar({ progress = 0.6 }: { progress?: number }) {
       animate={{ opacity: 1 }}
     >
       <motion.div
-        className="h-full rounded-full animate-gradient-flow"
+        className="h-full rounded-full bg-[var(--foreground)]"
         style={{
-          background: "var(--gradient-brand)",
           width: `${Math.min(100, progress * 100)}%`,
         }}
         initial={{ width: 0 }}

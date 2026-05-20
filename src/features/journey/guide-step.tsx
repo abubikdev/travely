@@ -1,85 +1,84 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { AppShell, StepHeader } from "@/components/layout/app-shell";
-import { GuideRenderer } from "@/components/timeline/guide-renderer";
-import { ChatInput } from "@/components/chat/chat-input";
-import { GradientOrb } from "@/components/gradients/gradient-orb";
+import { useState, useEffect } from "react";
 import { useJourneyStore } from "@/stores/journey-store";
+import { GradientOrb } from "@/components/gradients/gradient-orb";
+import { TurnByTurnGuide } from "@/components/timeline/turn-by-turn";
+import { motion, AnimatePresence } from "framer-motion";
+import { AlertCircle, RefreshCw } from "lucide-react";
 import { useGuide } from "@/features/ai/use-guide";
-import { Settings } from "lucide-react";
-import Link from "next/link";
+
+const LOADING_MESSAGES = [
+  "Building your travel execution guide…",
+  "Optimizing routes and transfers…",
+  "Structuring timeline logistics…",
+  "Finalizing turn-by-turn instructions…",
+];
 
 export function GuideStep() {
-  const { guide, isGenerating } = useJourneyStore();
-  const { editGuide } = useGuide();
-  const [editMode, setEditMode] = useState(false);
+  const { guide, isGenerating, error } = useJourneyStore();
+  const { generateGuide } = useGuide();
+  const [msgIndex, setMsgIndex] = useState(0);
 
-  if (!guide && isGenerating) {
+  useEffect(() => {
+    if (!isGenerating) return;
+    const interval = setInterval(() => {
+      setMsgIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isGenerating]);
+
+  if (error && !guide) {
     return (
-      <AppShell className="min-h-[100dvh] items-center justify-center">
-        <div className="flex flex-col items-center px-5 py-20">
-          <GradientOrb size={100} />
-          <p className="mt-10 text-[18px] text-[var(--foreground-secondary)]">
-            Building your travel execution guide…
-          </p>
-        </div>
-      </AppShell>
+      <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center bg-black text-white px-6 text-center">
+        <AlertCircle className="h-12 w-12 text-[#ff3b30] mb-4" />
+        <h2 className="text-[22px] font-semibold">Generation Failed</h2>
+        <p className="mt-2 text-[16px] text-[#8e8e93]">{error}</p>
+        <button
+          onClick={() => generateGuide()}
+          className="mt-8 flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[16px] font-medium text-black"
+        >
+          <RefreshCw className="h-4 w-4" /> Try again
+        </button>
+      </div>
     );
   }
 
-  if (!guide) return null;
-
-  return (
-    <AppShell
-      className="flex min-h-[100dvh] flex-1 flex-col overflow-hidden"
-      header={
-        <div className="flex w-full items-start justify-between gap-4 px-5 pt-[max(16px,var(--safe-top))]">
-          <StepHeader title="Your guide" subtitle="Execution flow" size="large" />
-          <Link
-            href="/settings"
-            className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--surface-muted)]"
-            aria-label="Settings"
-          >
-            <Settings className="h-5 w-5 text-[var(--foreground-secondary)]" />
-          </Link>
+  if (!guide && isGenerating) {
+    return (
+      <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center bg-black text-white px-5">
+        <GradientOrb size={100} />
+        <div className="h-8 mt-10 overflow-hidden relative w-full text-center">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={msgIndex}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 text-[18px] text-[#8e8e93]"
+            >
+              {LOADING_MESSAGES[msgIndex]}
+            </motion.p>
+          </AnimatePresence>
         </div>
-      }
-      footer={
-        editMode ? (
-          <ChatInput
-            onSend={async (msg) => {
-              await editGuide(msg);
-            }}
-            disabled={isGenerating}
-            placeholder="e.g. Add detail about the train transfer…"
-          />
-        ) : undefined
-      }
-    >
-      <div
-        className={cn(
-          "flex-1 overflow-y-auto px-5 scrollbar-hide",
-          editMode
-            ? "pb-[calc(var(--chat-input-offset)+var(--safe-bottom)+1rem)]"
-            : "pb-6"
-        )}
-      >
-        <GuideRenderer guide={guide} />
       </div>
+    );
+  }
 
-      <div className="shrink-0 px-5 pb-[max(20px,var(--safe-bottom))]">
-        <motion.button
-          type="button"
-          onClick={() => setEditMode(!editMode)}
-          className="w-full py-4 text-[16px] font-medium text-[var(--foreground-secondary)]"
-          whileTap={{ scale: 0.98 }}
+  if (!guide) {
+    return (
+      <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center bg-black text-white px-5 text-center">
+        <h2 className="text-[20px] font-medium text-[#8e8e93]">No guide found.</h2>
+        <button
+          onClick={() => generateGuide()}
+          className="mt-6 rounded-full bg-white px-6 py-3 text-[16px] font-medium text-black"
         >
-          {editMode ? "Done editing" : "Edit with AI"}
-        </motion.button>
+          Generate Guide
+        </button>
       </div>
-    </AppShell>
-  );
+    );
+  }
+
+  return <TurnByTurnGuide guide={guide} />;
 }

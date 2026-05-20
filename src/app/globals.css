@@ -1,54 +1,19 @@
 @import "tailwindcss";
 
 :root {
-    --background: #f7f7f8;
+    --background: #ffffff;
     --background-elevated: #ffffff;
     --foreground: #1c1c1e;
     --foreground-secondary: #636366;
     --foreground-tertiary: #aeaeb2;
-    --surface-muted: #efeff1;
-    --surface-subtle: #f2f2f4;
-    --accent-pink: #ff5da2;
-    --accent-blue: #5b8cff;
-    --accent-orange: #ffb347;
-    --gradient-brand: linear-gradient(
-        135deg,
-        var(--accent-pink) 0%,
-        var(--accent-blue) 48%,
-        var(--accent-orange) 100%
-    );
-    --gradient-brand-horizontal: linear-gradient(
-        90deg,
-        var(--accent-pink) 0%,
-        var(--accent-blue) 50%,
-        var(--accent-orange) 100%
-    );
-    --gradient-soft: linear-gradient(
-        160deg,
-        rgba(255, 93, 162, 0.2) 0%,
-        rgba(91, 140, 255, 0.16) 45%,
-        rgba(255, 179, 71, 0.2) 100%
-    );
-    --gradient-mesh:
-        radial-gradient(
-            ellipse 85% 55% at 15% 8%,
-            rgba(255, 93, 162, 0.38) 0%,
-            transparent 58%
-        ),
-        radial-gradient(
-            ellipse 75% 50% at 88% 18%,
-            rgba(91, 140, 255, 0.32) 0%,
-            transparent 52%
-        ),
-        radial-gradient(
-            ellipse 70% 45% at 45% 95%,
-            rgba(255, 179, 71, 0.34) 0%,
-            transparent 55%
-        );
+    --surface-muted: #f2f2f7;
+    --surface-subtle: #f9f9fb;
+
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --safe-left: env(safe-area-inset-left, 0px);
     --safe-right: env(safe-area-inset-right, 0px);
+    
     --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
     --chat-input-offset: 5.25rem;
@@ -62,98 +27,6 @@
         system-ui, sans-serif;
 }
 
-/* Monochrome palette with no background gradients by default */
-html.theme-monochrome {
-    /* Keep grayscale defaults, remove gradient dependence */
-    --background: #f6f6f6;
-    --background-elevated: #ffffff;
-    --foreground: #1a1a1d;
-    --foreground-secondary: #6d6d72;
-    --foreground-tertiary: #8a8a90;
-    --surface-muted: #e5e5e9;
-}
-
-/* Avoid gradient backgrounds in general */
-.gradient-fill {
-    background: var(--surface-muted);
-    background-image: none;
-}
-.gradient-text {
-    color: var(--foreground);
-    background: none;
-    -webkit-background-clip: initial;
-    background-clip: initial;
-}
-
-/* Backgrounds: remove mesh gradient from body */
-body {
-    background-color: var(--background);
-    background-image: none;
-    background-attachment: fixed;
-    background-size: cover;
-    color: var(--foreground);
-    font-family: var(--font-sans);
-    min-height: 100%;
-    min-height: 100dvh;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-::selection {
-    background: rgba(255, 93, 162, 0.22);
-}
-
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-
-.gradient-text {
-    /* keep non-gradient text for better readability on monochrome */
-    color: var(--foreground);
-    background: none;
-}
-
-/* Monochrome theme (default) */
-html.theme-monochrome {
-    --background: #f6f6f6;
-    --background-elevated: #ffffff;
-    --foreground: #1a1a1d;
-    --foreground-secondary: #6d6d72;
-    --foreground-tertiary: #8a8a90;
-    --surface-muted: #e5e5e9;
-    --surface-subtle: #f0f0f2;
-    /* grayscale gradient by default */
-    --gradient-brand: linear-gradient(135deg, #555 0%, #888 48%, #bbb 100%);
-    --gradient-brand-horizontal: linear-gradient(
-        90deg,
-        #555 0%,
-        #888 50%,
-        #bbb 100%
-    );
-    --gradient-soft: linear-gradient(
-        160deg,
-        rgba(0, 0, 0, 0.15) 0%,
-        rgba(0, 0, 0, 0.1) 45%,
-        rgba(0, 0, 0, 0.15) 100%
-    );
-    --gradient-mesh:
-        radial-gradient(circle, rgba(80, 80, 80, 0.35) 0%, transparent 60%),
-        radial-gradient(circle, rgba(120, 120, 120, 0.25) 0%, transparent 60%),
-        radial-gradient(circle, rgba(200, 200, 200, 0.2) 0%, transparent 60%);
-}
-
-/* Gradients removed in onboarding and backgrounds; bursts disabled for now */
-
-* {
-    -webkit-tap-highlight-color: transparent;
-}
-
 html {
     height: 100%;
     height: 100dvh;
@@ -161,9 +34,6 @@ html {
 
 body {
     background-color: var(--background);
-    background-image: none;
-    background-attachment: fixed;
-    background-size: cover;
     color: var(--foreground);
     font-family: var(--font-sans);
     min-height: 100%;
@@ -174,7 +44,7 @@ body {
 }
 
 ::selection {
-    background: rgba(255, 93, 162, 0.22);
+    background: var(--surface-muted);
 }
 
 .scrollbar-hide {
@@ -186,16 +56,8 @@ body {
     display: none;
 }
 
-.gradient-text {
-    color: var(--foreground);
-    background: none;
-    -webkit-background-clip: initial;
-    background-clip: initial;
-}
-
-.gradient-fill {
-    background: var(--surface-muted);
-    background-image: none;
+* {
+    -webkit-tap-highlight-color: transparent;
 }
 
 .surface-elevated {
@@ -206,105 +68,33 @@ body {
     background: var(--surface-muted);
 }
 
-@keyframes breathe {
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.85;
-    }
-    50% {
-        transform: scale(1.06);
-        opacity: 1;
-    }
+/* Fallback stubs for components using gradient classes, so they don't break until refactored */
+.gradient-fill,
+.gradient-text {
+    background: var(--surface-muted);
+    color: var(--foreground);
 }
 
-@keyframes gradient-flow {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.animate-breathe {
-    animation: breathe 3s var(--ease-soft) infinite;
-}
-
-.animate-gradient-flow {
-    background-size: 200% 200%;
-    animation: gradient-flow 6s ease infinite;
-}
-
-/* Skeleton shimmer */
+/* Monochrome Skeleton */
 .skeleton {
     height: 1rem;
     width: 100%;
-    border-radius: 6px;
-    background: linear-gradient(
-        90deg,
-        rgba(0, 0, 0, 0.08) 0%,
-        rgba(0, 0, 0, 0.18) 50%,
-        rgba(0, 0, 0, 0.08) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.4s linear infinite;
+    border-radius: 4px;
+    background: var(--surface-muted);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@keyframes shimmer {
-    0% {
-        background-position: 200% 0;
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
     }
-    100% {
-        background-position: -200% 0;
+    50% {
+        opacity: .5;
     }
 }
 
-/* Respect reduced motion preferences for the skeletons and animations */
 @media (prefers-reduced-motion: reduce) {
     .skeleton {
         animation: none;
     }
-    .animate-breathe,
-    .animate-gradient-flow {
-        animation: none !important;
-    }
-}
-
-/* Safety overrides: ensure no gradients leak into the UI (global monochrome enforcement) */
-* {
-    background: none !important;
-    background-image: none !important;
-    color: #1a1a1d !important;
-}
-html,
-body {
-    background: #ffffff !important;
-    background-image: none !important;
-}
-html.theme-monochrome {
-    background: #ffffff !important;
-    background-image: none !important;
-}
-
-/* Safety net: disable all background gradients and enforce monochrome surfaces across the app */
-*,
-*::before,
-*::after {
-    background: #ffffff !important;
-    background-image: none !important;
-    color: #1a1a1d !important;
-}
-html,
-body {
-    background: #ffffff !important;
-    background-image: none !important;
-}
-/* In explicit monochrome theme, preserve a subtle non-gradient surface if desired */
-html.theme-monochrome {
-    background: #ffffff !important;
-    background-image: none !important;
 }

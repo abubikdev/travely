@@ -9,9 +9,9 @@ interface GradientOrbProps {
   pulse?: boolean;
 }
 
-/** AI / loading moments only — pink → blue → orange orb */
+/** Redesigned from GradientOrb to a minimal monochrome indicator */
 export function GradientOrb({
-  size = 120,
+  size = 64,
   className,
   pulse = true,
 }: GradientOrbProps) {
@@ -22,28 +22,13 @@ export function GradientOrb({
       aria-hidden
     >
       <motion.div
-        className="absolute inset-0 rounded-full opacity-70"
+        className="relative rounded-full bg-[var(--surface-muted)]"
         style={{
-          background:
-            "radial-gradient(circle, rgba(255,93,162,0.55) 0%, rgba(91,140,255,0.4) 45%, rgba(255,179,71,0.5) 75%, transparent 100%)",
-          filter: "blur(28px)",
+          width: size * 0.5,
+          height: size * 0.5,
         }}
-        animate={
-          pulse
-            ? { scale: [1, 1.12, 1], opacity: [0.65, 0.9, 0.65] }
-            : undefined
-        }
-        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="relative rounded-full"
-        style={{
-          width: size * 0.42,
-          height: size * 0.42,
-          background: "var(--gradient-brand)",
-        }}
-        animate={pulse ? { scale: [0.96, 1, 0.96] } : undefined}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+        animate={pulse ? { scale: [0.95, 1.05, 0.95], opacity: [0.5, 1, 0.5] } : undefined}
+        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );

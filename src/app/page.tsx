@@ -22,7 +22,7 @@ export default function HomePage() {
   if (!hydrated || (authEnabled && authLoading)) {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
-        <Skeleton width={40} height={40} className="gradient-fill" />
+        <Skeleton width={40} height={40} className="bg-[var(--surface-muted)]" />
       </div>
     );
   }

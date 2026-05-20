@@ -20,7 +20,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         className="flex w-full justify-end py-2"
       >
-        <div className="max-w-[88%] rounded-full bg-[var(--foreground)] px-5 py-3 text-[16px] leading-relaxed text-[var(--background-elevated)]">
+        <div className="max-w-[88%] rounded-[22px] bg-[var(--surface-muted)] px-5 py-3 text-[16px] leading-relaxed text-[var(--foreground)]">
           {message.content}
         </div>
       </motion.div>

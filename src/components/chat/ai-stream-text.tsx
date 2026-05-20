@@ -76,7 +76,7 @@ export function AiStreamText({
       )}
       {streaming && (
         <motion.span
-          className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] rounded-full gradient-fill align-middle"
+          className="ml-0.5 inline-block h-[1.1em] w-[2px] translate-y-[2px] rounded-full bg-[var(--foreground-tertiary)] align-middle"
           animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
           aria-hidden
@@ -92,7 +92,7 @@ export function AiThinkingDots() {
       {[0, 1, 2].map((i) => (
         <motion.span
           key={i}
-          className="h-2 w-2 rounded-full gradient-fill"
+          className="h-2 w-2 rounded-full bg-[var(--foreground-tertiary)]"
           animate={{ opacity: [0.25, 1, 0.25], scale: [0.85, 1, 0.85] }}
           transition={{
             duration: 1.2,

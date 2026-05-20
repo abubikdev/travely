@@ -44,8 +44,8 @@ export function ChatInput({
     >
       <div
         className={cn(
-          "mx-auto flex max-w-sm items-end gap-2 rounded-full border border-white/60 bg-white/90 px-3.5 py-1.5 shadow-[0_2px_24px_rgba(255,93,162,0.12)] backdrop-blur-md transition-opacity duration-200",
-          focused && "shadow-[0_4px_28px_rgba(91,140,255,0.16)]",
+          "mx-auto flex max-w-sm items-end gap-2 rounded-[22px] bg-[var(--surface-muted)] px-3.5 py-1.5 transition-all duration-200",
+          focused && "bg-[var(--surface-subtle)]",
           disabled && "opacity-45"
         )}
       >
@@ -72,8 +72,8 @@ export function ChatInput({
           onClick={handleSubmit}
           disabled={disabled || !value.trim()}
           className={cn(
-            "mb-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white disabled:opacity-30",
-            value.trim() ? "gradient-fill" : "bg-[var(--surface-muted)]"
+            "mb-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full disabled:opacity-30",
+            value.trim() ? "bg-[var(--foreground)] text-[var(--background-elevated)]" : "bg-transparent text-[var(--foreground-tertiary)]"
           )}
           whileTap={{ scale: 0.94 }}
           transition={{ type: "spring", stiffness: 500, damping: 30 }}

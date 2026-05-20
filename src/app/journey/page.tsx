@@ -15,7 +15,7 @@ function JourneyLoading() {
       role="status"
       aria-label="Loading"
     >
-      <Skeleton width={40} height={40} className="gradient-fill" />
+      <Skeleton width={40} height={40} className="bg-[var(--surface-muted)]" />
     </div>
   );
 }
@@ -58,7 +58,7 @@ export default function JourneyPage() {
   if (blocked) {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
-        <div className="h-10 w-10 animate-pulse rounded-full gradient-fill" />
+        <div className="h-10 w-10 animate-pulse rounded-full bg-[var(--surface-muted)]" />
       </div>
     );
   }
