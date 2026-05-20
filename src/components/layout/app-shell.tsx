@@ -8,8 +8,6 @@ interface AppShellProps {
   className?: string;
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  /** Extra tinted band behind hero areas */
-  accentHeader?: boolean;
 }
 
 export function AppShell({
@@ -17,36 +15,30 @@ export function AppShell({
   className,
   header,
   footer,
-  accentHeader = false,
 }: AppShellProps) {
   return (
-    <motion.div
-      className="relative flex min-h-[100dvh] w-full flex-col text-[var(--foreground)]"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      {accentHeader && (
-        <motion.div
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[min(42vh,360px)]"
-          style={{ background: "var(--gradient-soft)" }}
-          aria-hidden
-        />
-      )}
-      {header && (
-        <header className="relative z-10 w-full shrink-0 px-5 pt-[max(16px,var(--safe-top))] pb-4">
-          {header}
-        </header>
-      )}
-      <main
-        className={cn("relative z-10 flex w-full flex-1 flex-col", className)}
+    <div className="flex min-h-[100dvh] w-full flex-col items-center bg-[var(--background)]">
+      <motion.div
+        className="relative flex min-h-[100dvh] w-full max-w-2xl flex-col text-[var(--foreground)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
       >
-        {children}
-      </main>
-      {footer && (
-        <footer className="relative z-10 w-full shrink-0">{footer}</footer>
-      )}
-    </motion.div>
+        {header && (
+          <header className="relative z-10 w-full shrink-0 px-5 pt-[max(16px,var(--safe-top))] pb-4">
+            {header}
+          </header>
+        )}
+        <main
+          className={cn("relative z-10 flex w-full flex-1 flex-col", className)}
+        >
+          {children}
+        </main>
+        {footer && (
+          <footer className="relative z-10 w-full shrink-0">{footer}</footer>
+        )}
+      </motion.div>
+    </div>
   );
 }
 

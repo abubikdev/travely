@@ -68,11 +68,16 @@ body {
     background: var(--surface-muted);
 }
 
-/* Fallback stubs for components using gradient classes, so they don't break until refactored */
-.gradient-fill,
-.gradient-text {
-    background: var(--surface-muted);
-    color: var(--foreground);
+.gradient-vibrant {
+    background: linear-gradient(180deg, #ff2d9b 0%, #ff6b35 25%, #ffdd00 45%, #87ceeb 70%, #0055ff 100%);
+}
+
+.gradient-vibrant-text {
+    background: linear-gradient(180deg, #ff2d9b 0%, #ff6b35 25%, #ffdd00 45%, #87ceeb 70%, #0055ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
 }
 
 /* Monochrome Skeleton */

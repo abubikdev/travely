@@ -13,7 +13,7 @@ import { isAuthEnabled } from "@/lib/auth-config";
 import { useSettingsStore } from "@/stores/settings-store";
 import { useAuth } from "@/hooks/use-auth";
 import { APP_NAME } from "@/lib/constants";
-import { Shield, Key, Sparkles } from "lucide-react";
+import { Shield, Key, Sparkles, Map } from "lucide-react";
 
 const STEPS_WITH_AUTH = ["welcome", "auth", "privacy", "apikey"] as const;
 const STEPS_NO_AUTH = ["welcome", "privacy", "apikey"] as const;
@@ -124,9 +124,11 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
             >
               <div className="flex flex-1 flex-col items-center justify-center text-center">
                 <div
-                  className="h-40 w-40 rounded-full bg-[var(--surface-muted)] mb-10 mx-auto"
+                  className="h-40 w-40 rounded-[40px] gradient-vibrant mb-10 mx-auto flex items-center justify-center shadow-[0_20px_40px_-15px_rgba(255,42,133,0.3)]"
                   aria-label="onboarding visual"
-                />
+                >
+                  <Map className="h-16 w-16 text-white" strokeWidth={1.5} />
+                </div>
                 <motion.div
                   className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-medium"
                   style={{ background: "var(--surface-muted)" }}
@@ -171,16 +173,16 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
               className="flex flex-1 flex-col justify-between py-4"
             >
               <motion.div>
-                <div className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-full gradient-fill">
+                <div className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-[18px] gradient-vibrant shadow-[0_8px_16px_-6px_rgba(255,42,133,0.3)]">
                   <Shield className="h-6 w-6 text-white" strokeWidth={1.5} />
                 </div>
                 <h2 className="text-[34px] font-semibold tracking-[-0.03em]">
-                  Your data <span className="gradient-text">stays yours</span>
+                  Your data <span className="gradient-vibrant-text">stays yours</span>
                 </h2>
                 <ul className="mt-8 space-y-5 text-[17px] leading-relaxed text-[var(--foreground-secondary)]">
                   {authEnabled && (
                     <li className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full gradient-fill" />
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full gradient-vibrant" />
                       Optional account sync when you sign in.
                     </li>
                   )}
@@ -201,7 +203,7 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
               <Button
                 fullWidth
                 size="lg"
-                variant="gradient"
+                variant="default"
                 onClick={() => goNext("apikey")}
               >
                 Continue
@@ -216,11 +218,11 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
               className="flex flex-1 flex-col justify-between py-4"
             >
               <motion.div>
-                <motion.div className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-full gradient-fill">
+                <motion.div className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-[18px] gradient-vibrant shadow-[0_8px_16px_-6px_rgba(255,42,133,0.3)]">
                   <Key className="h-6 w-6 text-white" strokeWidth={1.5} />
                 </motion.div>
                 <h2 className="text-[34px] font-semibold tracking-[-0.03em]">
-                  Connect <span className="gradient-text">OpenAI</span>
+                  Connect <span className="gradient-vibrant-text">OpenAI</span>
                 </h2>
                 <p className="mt-4 text-[17px] leading-relaxed text-[var(--foreground-secondary)]">
                   Your key powers chat, vision, OCR, and guide generation. Never
@@ -246,7 +248,7 @@ export function OnboardingView({ onComplete }: OnboardingViewProps) {
                 <Button
                   fullWidth
                   size="lg"
-                  variant="gradient"
+                  variant="default"
                   disabled={testing || !apiKey.trim()}
                   onClick={() => handleSaveKey(true)}
                 >

@@ -7,6 +7,7 @@ import { useSettingsStore } from "@/stores/settings-store";
 import { useAuth } from "@/hooks/use-auth";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { Compass } from "lucide-react";
 
 function JourneyLoading() {
   return (
@@ -15,7 +16,7 @@ function JourneyLoading() {
       role="status"
       aria-label="Loading"
     >
-      <Skeleton width={40} height={40} className="bg-[var(--surface-muted)]" />
+      <Compass className="h-8 w-8 animate-spin text-[var(--foreground-tertiary)] opacity-50" />
     </div>
   );
 }
@@ -58,7 +59,7 @@ export default function JourneyPage() {
   if (blocked) {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
-        <div className="h-10 w-10 animate-pulse rounded-full bg-[var(--surface-muted)]" />
+        <Compass className="h-8 w-8 animate-spin text-[var(--foreground-tertiary)] opacity-50" />
       </div>
     );
   }

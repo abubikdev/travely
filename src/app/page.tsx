@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { OnboardingView } from "@/features/onboarding/onboarding-view";
 import { HomeView } from "@/features/home/home-view";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Compass } from "lucide-react";
 
 export default function HomePage() {
   const onboardingComplete = useSettingsStore((s) => s.onboardingComplete);
@@ -22,7 +23,7 @@ export default function HomePage() {
   if (!hydrated || (authEnabled && authLoading)) {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
-        <Skeleton width={40} height={40} className="bg-[var(--surface-muted)]" />
+        <Compass className="h-8 w-8 animate-spin text-[var(--foreground-tertiary)] opacity-50" />
       </div>
     );
   }
